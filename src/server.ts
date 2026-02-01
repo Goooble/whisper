@@ -1,22 +1,26 @@
 import { WebSocketServer } from "ws";
 import { WebSocket } from "ws";
 import { WebSocket as webSocket } from "ws";
-
+import { verifyUser } from "./auth.js";
+import { getUserID } from "./auth.js";
+import { addUser, deleteUser } from "./registry.js";
 interface WS extends WebSocket {
-  user: string;
+  userID: string;
 }
+export type { WS };
 
 const wss = new WebSocketServer({ port: 8000, clientTracking: true });
-const map = new Map();
 
 wss.on("connection", function connection(ws: WS, req) {
-  //associate ID
-  const name: string = new URL(
-    req.url as string,
-    "ws://localhost:8000",
-  ).searchParams.get("user") as string;
-  map.set(name, ws);
-  ws.user = name;
+  //auth
+  if (!req.url || !verifyUser(req.url)) {
+    //if url is not given as well
+    ws.close();
+  } else {
+    ws.userID = getUserID(req.url);
+    addUser(ws.userID, ws);
+  }
+
   ws.on("error", console.error);
 
   ws.on("message", function message(data) {
@@ -25,7 +29,7 @@ wss.on("connection", function connection(ws: WS, req) {
     console.log(data.toString());
   });
   ws.on("close", () => {
-    map.delete(ws.user);
+    deleteUser(ws.userID);
   });
 
   ws.send("Connected");

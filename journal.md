@@ -14,3 +14,9 @@ I read through some theory, set up basic client architecture, actually i dont ev
 ## Moving to web client
 
 Alright, making a terminal app seems like too much work without a library, its not something I would like to waste my time on if its gonna take me so much time. I will just move it to react, I can always make one eventually with the same server anyways.
+
+## Server architecture
+
+I am at the point where I kind of understand how websockets and the overall server blend together. You have two servers running on the same port, i can make calls to the websocket using socket with JSON and I can also make calls to my express server normally. Now I really need to start thinking about how I am going to structure my server really otherwise its going to lead to a huge refactor. The biggest mistake is probably not having a good idea of how JWT auth would work so abstracting that away is a leading to a lot of confusion. DB I have a general idea of how that is going to work so thats alright.
+
+I am not super interested in implementing auth and db right now, so i will just try to abstract away whatever ID verification stuff I have to the best of my ability.

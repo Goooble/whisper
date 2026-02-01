@@ -1,7 +1,6 @@
-const session: string[] = ["Gobi", "Maru", "Stein"];
-
-function addToSession(name: string) {
-  session.push(name);
+const users: string[] = ["Gobi", "Maru", "Stein"];
+function getUsers(): string[] {
+  return users;
 }
 
-export { session };
+export { getUsers };

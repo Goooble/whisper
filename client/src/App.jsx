@@ -1,14 +1,23 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
-import { socket } from "./webSocket";
-function sendMessage(message) {
+import { createSocket } from "./webSocket";
+function sendMessage(message, socket) {
   socket.send(message);
 }
 
 function App() {
-  let [messages, setMessages] = useState(["I am already here", "HERE"]);
+  let socketRef = useRef(null);
+
+  // let [messages, setMessages] = useState(["I am already here", "HERE"]);
   let [text, setText] = useState("");
   let [name, setName] = useState("Gobi");
+  useEffect(() => {
+    socketRef.current = createSocket(name);
+
+    return () => {
+      socketRef.current.close(1000, "Rename");
+    };
+  }, [name]);
   return (
     <>
       <label htmlFor="name">Name:</label>
@@ -20,11 +29,11 @@ function App() {
         value={name}
       />
       <div>
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           {messages.map((item) => (
             <div>{item}</div>
           ))}
-        </div>
+        </div> */}
         <div>
           <label htmlFor="messageBox"></label>
           <textarea
@@ -43,7 +52,7 @@ function App() {
           ></textarea>
           <button
             onClick={() => {
-              sendMessage({ sender: name, text: text });
+              sendMessage(name + ": " + text, socketRef.current);
               setText("");
             }}
           >

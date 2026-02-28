@@ -1,7 +1,9 @@
 import express from "express";
 import { wss } from "./server.js";
-const app = express();
+import cors from "cors";
 
+const app = express();
+// app.use(cors());
 app.get("/", (req, res) => {
   console.log("home");
 });

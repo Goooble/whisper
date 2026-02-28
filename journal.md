@@ -10,3 +10,7 @@ I have spent half a day reading up on typescript from their docs, and i got tire
 ## Websockets
 
 I read through some theory, set up basic client architecture, actually i dont even know why i am investing so much in the client because I eventually want to move onto a webpage with the same server.
+
+## Moving to web client
+
+Alright, making a terminal app seems like too much work without a library, its not something I would like to waste my time on if its gonna take me so much time. I will just move it to react, I can always make one eventually with the same server anyways.

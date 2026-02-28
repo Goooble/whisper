@@ -18,7 +18,6 @@
   },
   "homepage": "https://github.com/Goooble/whisper#readme",
   "dependencies": {
-    "@tailwindcss/vite": "^4.2.1",
     "@types/express": "^5.0.6",
     "@types/ws": "^8.18.1",
     "express": "^5.2.1",

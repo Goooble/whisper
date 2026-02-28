@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 import { socket } from "./webSocket";
-function sendMessage(text) {
-  socket.send(text);
+function sendMessage(message) {
+  socket.send(message);
 }
 
 function App() {
@@ -43,7 +43,7 @@ function App() {
           ></textarea>
           <button
             onClick={() => {
-              sendMessage(name + ": " + text);
+              sendMessage({ sender: name, text: text });
               setText("");
             }}
           >

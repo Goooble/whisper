@@ -1,4 +1,5 @@
 import express from "express";
+import { wss } from "./server.js";
 const app = express();
 
 app.get("/", (req, res) => {

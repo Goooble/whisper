@@ -4,11 +4,11 @@ const socket = new WebSocket("ws://localhost:8080");
 socket.addEventListener("open", (event) => {
   console.log("WebSocket connection established!");
   // Sends a message to the WebSocket server.
-  socket.send("Hello Server!");
+  // socket.send("Hello Server!");
 });
 // Listen for messages and executes when a message is received from the server.
 socket.addEventListener("message", (event) => {
-  console.log("Message from server: ", event.data);
+  console.log("server: ", event.data);
 });
 // Executes when the connection is closed, providing the close code and reason.
 socket.addEventListener("close", (event) => {

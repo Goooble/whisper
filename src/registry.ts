@@ -1,14 +1,14 @@
 import type { WS } from "./server.js";
 const userToWS = new Map<string, WS>();
 
-function addUser(userID: string, ws: WS) {
+function addUser(userID: string, ws: WS): void {
   userToWS.set(userID, ws);
 }
-function deleteUser(userID: string) {
+function deleteUser(userID: string): void {
   userToWS.delete(userID);
 }
 
-function getAllActiveUsers() {
+function getAllActiveUsers(): string[] {
   const users: string[] = [];
   userToWS.forEach((value, key) => {
     users.push(key);
@@ -16,7 +16,7 @@ function getAllActiveUsers() {
   return users;
 }
 
-function getAllActiveSockets() {
+function getAllActiveSockets(): WS[] {
   const sockets: WS[] = [];
   userToWS.forEach((value, key) => {
     sockets.push(value);
@@ -24,8 +24,10 @@ function getAllActiveSockets() {
   return sockets;
 }
 
-function getSocket(user: string) {
-  return userToWS.get(user);
+function getSocket(user: string): WS {
+  const socket = userToWS.get(user);
+  if (!socket) throw new Error("Socket doesnt exist");
+  return socket;
 }
 
 export {

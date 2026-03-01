@@ -3,6 +3,8 @@
 ## TODO
 
 Need to validate payloads
+please fix up a naming scheme before it gets too big
+error handling everywhere
 
 ## Lessons
 

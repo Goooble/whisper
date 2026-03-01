@@ -12,12 +12,11 @@ function createSocket(name, dispatcher) {
   const socket = new WebSocket("ws://localhost:8000/?user=" + name);
   socket.addEventListener("open", (event) => {
     console.log("Server: WebSocket connection established!");
-    socket.send("testing: Hello Server!");
+    // socket.send("testing: Hello Server!"); //will break server
   });
 
   socket.addEventListener("message", (event) => {
     const data = JSON.parse(event.data);
-    console.log("Recieving " + data.activeUsers);
     console.log(data);
     mapper(dispatcher, data);
   });
@@ -33,7 +32,16 @@ function createSocket(name, dispatcher) {
 }
 
 const sender = (function () {
-  function sendDirectMessage(socket, sender, receiver, data) {}
+  function sendDirectMessage(socket, sender, receiver, data) {
+    socket.send(
+      JSON.stringify({
+        command: "sendDirectMessage",
+        sender,
+        receiver,
+        text: data,
+      }),
+    );
+  }
 
   return { sendDirectMessage };
 })();

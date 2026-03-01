@@ -1,25 +1,37 @@
+function mapper(dispatcher, data) {
+  if (data.command === "activeUsers") {
+    dispatcher({ type: "handleConnectedUsers", data: data.activeUsers });
+  }
+  //so that i can separate the incoming server data and the frontEnd handlers
+  //if server changes API, update the if conditions
+  //if frontend changes, change teh dispatcher type
+}
+
 // Creates a new WebSocket connection to the specified URL.
-function createSocket(name) {
+function createSocket(name, dispatcher) {
   const socket = new WebSocket("ws://localhost:8000/?user=" + name);
-  // Executes when the connection is successfully established.
   socket.addEventListener("open", (event) => {
-    console.log("WebSocket connection established!");
-    // Sends a message to the WebSocket server.
-    socket.send("Hello Server!");
+    console.log("Server: WebSocket connection established!");
+    socket.send("testing: Hello Server!");
   });
-  // Listen for messages and executes when a message is received from the server.
+
   socket.addEventListener("message", (event) => {
-    console.log("server: ", event.data);
+    const data = JSON.parse(event.data);
+    console.log("Recieving " + data.activeUsers);
+    console.log(data);
+    mapper(dispatcher, data);
   });
-  // Executes when the connection is closed, providing the close code and reason.
+
   socket.addEventListener("close", (event) => {
     console.log("WebSocket connection closed:", event.code, event.reason);
   });
-  // Executes if an error occurs during the WebSocket communication.
+
   socket.addEventListener("error", (error) => {
     console.error("WebSocket error:", error);
   });
   return socket;
 }
 
-export { createSocket };
+function sendDirectMessage(socket, sender, receiver, data) {}
+
+export { createSocket, sendDirectMessage };

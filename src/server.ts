@@ -12,6 +12,18 @@ import {
 interface WS extends WebSocket {
   userID: string;
 }
+
+interface NetworkMessageStructure extends MessageStructure {
+  status: string;
+}
+interface MessageStructure {
+  command: "activeUsers" | "network";
+}
+
+interface ConnectionsMessageStructure extends MessageStructure {
+  activeUsers: string[];
+}
+
 export type { WS };
 
 const wss = new WebSocketServer({ port: 8000, clientTracking: true });
@@ -31,7 +43,7 @@ wss.on("connection", function connection(ws: WS, req) {
   });
 
   ws.on("message", function message(data) {
-    broadCast(data.toString(), ws);
+    // broadCast(data.toString(), ws);
     console.log(wss.clients.size);
     console.log(data.toString());
   });
@@ -41,16 +53,15 @@ wss.on("connection", function connection(ws: WS, req) {
     updateConnections();
   });
   updateConnections();
-  ws.send("Connected");
+  const payload: NetworkMessageStructure = {
+    command: "network",
+    status: "Connected",
+  };
+  ws.send(JSON.stringify(payload));
 });
 
-interface MessageStructure {
-  command: "activeUsers";
-  activeUsers: string[];
-}
-
 function updateConnections() {
-  const message: MessageStructure = {
+  const message: ConnectionsMessageStructure = {
     command: "activeUsers",
     activeUsers: [],
   };
@@ -62,16 +73,9 @@ function updateConnections() {
     let usersToBroadcast = [...usersConnected];
     let index = usersToBroadcast.indexOf(client.userID);
     usersToBroadcast.splice(index, 1);
+    //broadcast
     message.activeUsers = usersToBroadcast;
     client.send(JSON.stringify(message));
-  });
-}
-
-function broadCast(message: string, sender: WS): void {
-  wss.clients.forEach((client) => {
-    if (client.readyState === webSocket.OPEN && sender != client) {
-      client.send(message);
-    }
   });
 }
 

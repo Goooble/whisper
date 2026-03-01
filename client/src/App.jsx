@@ -1,8 +1,16 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import "./App.css";
 import { createSocket } from "./webSocket";
-function sendMessage(message, socket) {
-  socket.send(message);
+import { UI } from "./UI";
+
+function sendMessage() {}
+
+function reciever(state, action) {
+  switch (action.type) {
+    case "handleConnectedUsers":
+      return { connectedUsers: action.data };
+  }
+  return state;
 }
 
 function App() {
@@ -10,57 +18,24 @@ function App() {
 
   // let [messages, setMessages] = useState(["I am already here", "HERE"]);
   let [text, setText] = useState("");
-  let [name, setName] = useState("Gobi");
+  let [name, setName] = useState("");
+  const [state, dispatcher] = useReducer(reciever, { connectedUsers: [] });
   useEffect(() => {
-    socketRef.current = createSocket(name);
-
+    socketRef.current = createSocket(name, dispatcher);
     return () => {
       socketRef.current.close(1000, "Rename");
     };
   }, [name]);
   return (
-    <>
-      <label htmlFor="name">Name:</label>
-      <input
-        id="name"
-        className="border-2"
-        type="text"
-        onInput={(e) => setName(e.target.value)}
-        value={name}
-      />
-      <div>
-        {/* <div className="flex flex-col">
-          {messages.map((item) => (
-            <div>{item}</div>
-          ))}
-        </div> */}
-        <div>
-          <label htmlFor="messageBox"></label>
-          <textarea
-            className="border-2"
-            name="message"
-            id="messageBox"
-            onInput={(e) => setText(e.target.value)}
-            value={text}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                sendMessage(name + ": " + text);
-                setText("");
-              }
-            }}
-          ></textarea>
-          <button
-            onClick={() => {
-              sendMessage(name + ": " + text, socketRef.current);
-              setText("");
-            }}
-          >
-            Send
-          </button>
-        </div>
-      </div>
-    </>
+    <UI
+      name={name}
+      setName={setName}
+      connectedUsers={state.connectedUsers}
+      setText={setText}
+      text={text}
+      sendMessage={sendMessage}
+      socketRef={socketRef}
+    ></UI>
   );
 }
 

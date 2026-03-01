@@ -8,4 +8,30 @@ function deleteUser(userID: string) {
   userToWS.delete(userID);
 }
 
-export { deleteUser, addUser };
+function getAllActiveUsers() {
+  const users: string[] = [];
+  userToWS.forEach((value, key) => {
+    users.push(key);
+  });
+  return users;
+}
+
+function getAllActiveSockets() {
+  const sockets: WS[] = [];
+  userToWS.forEach((value, key) => {
+    sockets.push(value);
+  });
+  return sockets;
+}
+
+function getSocket(user: string) {
+  return userToWS.get(user);
+}
+
+export {
+  deleteUser,
+  addUser,
+  getAllActiveUsers,
+  getSocket,
+  getAllActiveSockets,
+};

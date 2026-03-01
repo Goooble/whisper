@@ -1,4 +1,4 @@
-const users: string[] = ["Gobi", "Maru", "Stein"];
+const users: string[] = ["Gobi", "Maru", "Stein", "Gobiru"];
 function getUsers(): string[] {
   return users;
 }

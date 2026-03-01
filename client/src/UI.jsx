@@ -1,12 +1,9 @@
-function UI({
-  name,
-  setName,
-  connectedUsers,
-  setText,
-  text,
-  sendMessage,
-  socketRef,
-}) {
+import { useEffect, useState } from "react";
+
+function UI({ name, setName, connectedUsers, sendMessage }) {
+  let [text, setText] = useState("");
+  const [selectedUser, setSelectedUser] = useState("");
+  let effectiveUser = selectedUser === "" ? connectedUsers[0] : selectedUser;
   return (
     <>
       <label htmlFor="name">Name:</label>
@@ -18,17 +15,19 @@ function UI({
         value={name}
       />
       <label htmlFor="dm"></label>
-      <select name="dm" id="dm">
+      <select
+        name="dm"
+        id="dm"
+        onChange={(event) => {
+          console.log("triggered");
+          setSelectedUser(event.target.value);
+        }}
+      >
         {connectedUsers.map((item) => {
           return <option value={item}>{item}</option>;
         })}
       </select>
       <div>
-        {/* <div className="flex flex-col">
-          {messages.map((item) => (
-            <div>{item}</div>
-          ))}
-        </div> */}
         <div>
           <label htmlFor="messageBox"></label>
           <textarea
@@ -40,14 +39,14 @@ function UI({
             onKeyDown={(e) => {
               if (e.key === "Enter") {
                 e.preventDefault();
-                sendMessage(name + ": " + text);
+                sendMessage(effectiveUser, text);
                 setText("");
               }
             }}
           ></textarea>
           <button
             onClick={() => {
-              sendMessage(name + ": " + text, socketRef.current);
+              sendMessage(effectiveUser, text);
               setText("");
             }}
           >

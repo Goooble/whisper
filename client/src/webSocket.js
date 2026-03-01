@@ -32,6 +32,10 @@ function createSocket(name, dispatcher) {
   return socket;
 }
 
-function sendDirectMessage(socket, sender, receiver, data) {}
+const sender = (function () {
+  function sendDirectMessage(socket, sender, receiver, data) {}
 
-export { createSocket, sendDirectMessage };
+  return { sendDirectMessage };
+})();
+
+export { createSocket, sender };

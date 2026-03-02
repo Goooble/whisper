@@ -1,6 +1,14 @@
 function mapper(dispatcher, data) {
-  if (data.command === "activeUsers") {
-    dispatcher({ type: "handleConnectedUsers", data: data.activeUsers });
+  switch (data.command) {
+    case "activeUsers":
+      dispatcher({ type: "handleConnectedUsers", data: data.activeUsers });
+      break;
+    case "directMessage":
+      dispatcher({
+        type: "handleDirectMessage",
+        sender: data.sender,
+        text: data.text,
+      });
   }
   //so that i can separate the incoming server data and the frontEnd handlers
   //if server changes API, update the if conditions

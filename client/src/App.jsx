@@ -7,7 +7,15 @@ import { sender } from "./webSocket";
 function reciever(state, action) {
   switch (action.type) {
     case "handleConnectedUsers":
-      return { connectedUsers: action.data };
+      return { ...state, connectedUsers: action.data };
+    case "handleDirectMessage":
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          { sender: action.sender, text: action.text },
+        ],
+      };
   }
   return state;
 }
@@ -17,9 +25,12 @@ function App() {
 
   // let [messages, setMessages] = useState(["I am already here", "HERE"]);
 
-  let [name, setName] = useState("");
+  const [name, setName] = useState("");
   //handles recieveing events
-  const [state, dispatcher] = useReducer(reciever, { connectedUsers: [] });
+  const [state, dispatcher] = useReducer(reciever, {
+    connectedUsers: [],
+    messages: [],
+  });
   //socket connections
   useEffect(() => {
     socketRef.current = createSocket(name, dispatcher);
@@ -31,12 +42,14 @@ function App() {
     console.log(text);
     sender.sendDirectMessage(socketRef.current, name, reciever, text);
   }
+  console.log(state.messages);
   return (
     <UI
       name={name}
       setName={setName}
       connectedUsers={state.connectedUsers}
       sendMessage={sendMessage}
+      messages={state.messages}
     ></UI>
   );
 }

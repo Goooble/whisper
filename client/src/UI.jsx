@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function UI({ name, setName, connectedUsers, sendMessage }) {
+function UI({ name, setName, connectedUsers, sendMessage, messages }) {
   let [text, setText] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
   let effectiveUser = selectedUser === "" ? connectedUsers[0] : selectedUser;
@@ -28,6 +28,18 @@ function UI({ name, setName, connectedUsers, sendMessage }) {
         })}
       </select>
       <div>
+        <div>
+          {messages.map((item) => {
+            return (
+              <div>
+                {item.sender}: {item.text}
+              </div>
+            );
+          })}
+          <div>
+            <span></span>
+          </div>
+        </div>
         <div>
           <label htmlFor="messageBox"></label>
           <textarea

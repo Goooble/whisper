@@ -33,3 +33,11 @@ Sending, i have to keep a referennce of the socket in teh APP anyway, so i am ju
 the UI will make no socket calls, it will just use the callback i am gonna pass into the components through the APP which inturn would call WS functions.
 
 I have realized, teh way to know about what should go where, component A or component B. Imagine, you remove component B and replace with component C. how much do you have to refactor? and imagine the opposite scenario. Keep doing this process for every decision and find ways to reduce this refactoring, this reallllyyyy helps. earlier you make such decisions, the better teh dev experience. THis will tell what should own and handle what.
+
+## WebSocket server data flow
+
+after some thinking and back and forth with AI. I painstakingly implemented the FrontEnd data -> WS -> Chat service data flow. Chat service sending back instruction to WS for execution seems like a lot of overhead to me but it makes sense how it reduces coupling A LOT between WS and ChatService and how all I have to do right now is just attaching functions to the data flow framework I have built up both in the frontEnd and the Backend. Also had a run in with a debugger, and damn debuggers are pretty cool rather than pasting console.logs everywhere to figure out where teh error is.
+
+## The power of typescript
+
+I am impressed, really impressed and SO GLAD that I learnt typescript for this like so so so glad. So many objects moving around everywhere, without types, it would have been hell debugging this nonsense. I love typescript, and I am gonna swear by it from today. Need to use it for the front end also from next time, I promise.

@@ -41,3 +41,7 @@ after some thinking and back and forth with AI. I painstakingly implemented the 
 ## The power of typescript
 
 I am impressed, really impressed and SO GLAD that I learnt typescript for this like so so so glad. So many objects moving around everywhere, without types, it would have been hell debugging this nonsense. I love typescript, and I am gonna swear by it from today. Need to use it for the front end also from next time, I promise.
+
+## Connecto pivot
+
+I have an idea now, I brainstormed for few hours and I want to pivot this in that direction. Hope its impressive on a resume.

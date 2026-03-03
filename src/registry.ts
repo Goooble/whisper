@@ -1,4 +1,4 @@
-import type { WS } from "./server.js";
+import type { WS } from "./websocket.js";
 const userToWS = new Map<string, WS>();
 
 function addUser(userID: string, ws: WS): void {

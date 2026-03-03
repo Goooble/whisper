@@ -2,12 +2,13 @@
 
 ## TODO
 
-Implement recieving messages in Client
 fix naming schemes and comment code
 
 Need to validate payloads
 please fix up a naming scheme before it gets too big
 error handling everywhere
+
+Checkout status codes
 
 ## Lessons
 

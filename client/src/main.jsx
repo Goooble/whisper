@@ -13,6 +13,21 @@ function auth() {
   console.log("Authing");
 }
 
+async function signupAction({ request }) {
+  const data = await request.formData();
+  const payload = {
+    username: data.get("username"),
+    password: data.get("password"),
+  };
+  console.log(payload);
+  const res = await fetch("http://localhost:8080/signup", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" },
+  });
+  console.log(res);
+}
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -24,6 +39,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "signup",
+        action: signupAction,
         Component: Signup,
       },
       {

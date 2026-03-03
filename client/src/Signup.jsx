@@ -1,5 +1,19 @@
+import { Form } from "react-router";
+
 function Signup() {
-  return <div>signup</div>;
+  return (
+    <Form method="post">
+      <label htmlFor="username">
+        Username:
+        <input type="text" name="username" id="username" />
+      </label>
+      <label htmlFor="password">
+        Password:
+        <input type="password" name="password" id="password" />
+      </label>
+      <input type="submit" value="Sign Up" />
+    </Form>
+  );
 }
 
 export { Signup };

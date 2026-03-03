@@ -1,4 +1,6 @@
-import { getUsers } from "./db.js";
+import jwt from "jsonwebtoken";
+import type { Request, Response } from "express";
+import { addNewUser, getUsers } from "./db.js";
 function verifyUser(url: string): boolean {
   const name: string = grabName(url);
   const userList: string[] = getUsers();
@@ -17,4 +19,14 @@ function grabName(url: string): string {
   return name;
 }
 
-export { verifyUser, getUserID };
+function signin(req: Request, res: Response) {
+  console.log(req.body);
+  try {
+    addNewUser(req.body);
+  } catch (e) {
+    res.sendStatus(400);
+  }
+  res.send("ok");
+}
+
+export { verifyUser, getUserID, signin };

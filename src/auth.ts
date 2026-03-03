@@ -1,6 +1,8 @@
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import type { Request, Response } from "express";
-import { addNewUser, getUsers } from "./db.js";
+import { addNewUser, getUserByUsername, getUsers } from "./db.js";
+
 function verifyUser(url: string): boolean {
   const name: string = grabName(url);
   const userList: string[] = getUsers();
@@ -20,12 +22,39 @@ function grabName(url: string): string {
 }
 
 async function signin(req: Request, res: Response) {
+  req.body.password = await bcrypt.hash(req.body.password, 12);
   try {
     await addNewUser(req.body);
   } catch (e) {
-    res.sendStatus(400);
+    return res.sendStatus(400);
   }
   res.send("ok");
 }
 
-export { verifyUser, getUserID, signin };
+async function login(req: Request, res: Response) {
+  try {
+    const data = await getUserByUsername(req.body.username);
+    if (!data || data.rows.length === 0) {
+      throw new Error("Invalid username");
+    }
+    const user = data.rows[0];
+    const isValid = await bcrypt.compare(req.body.password, user.password);
+    if (isValid) {
+      console.log(user.id);
+      const token = jwt.sign({ sub: user.id }, "secret", { expiresIn: "1d" });
+      res.cookie("token", token, {
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+      });
+    } else {
+      throw new Error("Invalid password");
+    }
+  } catch (e) {
+    console.log(e);
+    return res.sendStatus(400);
+  }
+  res.send("LOGGED IN");
+}
+
+export { verifyUser, getUserID, signin, login };

@@ -2,7 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 import { RouterProvider } from "react-router/dom";
 import { Home } from "./Home.jsx";
 import { Room } from "./Room.jsx";
@@ -25,7 +25,26 @@ async function signupAction({ request }) {
     body: JSON.stringify(payload),
     headers: { "Content-Type": "application/json" },
   });
+  if (res.ok) {
+    return redirect("/auth/login");
+  }
+}
+async function loginAction({ request }) {
+  const data = await request.formData();
+  const payload = {
+    username: data.get("username"),
+    password: data.get("password"),
+  };
+  const res = await fetch("http://localhost:8080/login", {
+    method: "POST",
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+  });
   console.log(res);
+  if (res.ok) {
+    return redirect("/");
+  }
 }
 
 const router = createBrowserRouter([
@@ -44,6 +63,7 @@ const router = createBrowserRouter([
       },
       {
         path: "login",
+        action: loginAction,
         Component: Login,
       },
     ],

@@ -1,5 +1,4 @@
-import { Pool } from "pg";
-import bcrypt from "bcrypt";
+import { Pool, type QueryResult } from "pg";
 interface NewUserData {
   username: string;
   password: string;
@@ -11,17 +10,29 @@ const pool = new Pool({
 });
 
 async function addNewUser(data: NewUserData) {
-  console.log("entering data");
-  const hashedPassword = await bcrypt.hash(data.password, 12);
   try {
     await pool.query(
       `
     INSERT INTO users (username, password) VALUES($1, $2);   
       `,
-      [data.username, hashedPassword],
+      [data.username, data.password],
     );
   } catch (e) {
     throw e;
+  }
+}
+
+async function getUserByUsername(username: string) {
+  try {
+    const res = await pool.query(
+      `
+    SELECT * FROM users WHERE username = $1;   
+      `,
+      [username],
+    );
+    return res;
+  } catch (e) {
+    console.log(e);
   }
 }
 
@@ -30,4 +41,4 @@ function getUsers(): string[] {
   return users;
 }
 
-export { getUsers, pool, addNewUser };
+export { getUsers, pool, addNewUser, getUserByUsername };

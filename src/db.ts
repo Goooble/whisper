@@ -21,7 +21,6 @@ async function addNewUser(data: NewUserData) {
       [data.username, hashedPassword],
     );
   } catch (e) {
-    console.log(e);
     throw e;
   }
 }

@@ -19,10 +19,9 @@ function grabName(url: string): string {
   return name;
 }
 
-function signin(req: Request, res: Response) {
-  console.log(req.body);
+async function signin(req: Request, res: Response) {
   try {
-    addNewUser(req.body);
+    await addNewUser(req.body);
   } catch (e) {
     res.sendStatus(400);
   }

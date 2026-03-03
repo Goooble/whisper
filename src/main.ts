@@ -1,7 +1,7 @@
 import express from "express";
 import { wss } from "./websocket.js";
 import cors from "cors";
-import { login, signin } from "./auth.js";
+import { login, logout, signin } from "./auth.js";
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 
 app.post("/login", login);
 app.post("/signup", signin);
-
+app.get("/logout", logout);
 app.listen(8080, () => {
   console.log("listening...");
 });

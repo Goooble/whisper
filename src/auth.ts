@@ -57,4 +57,10 @@ async function login(req: Request, res: Response) {
   res.send("LOGGED IN");
 }
 
-export { verifyUser, getUserID, signin, login };
+function logout(req: Request, res: Response) {
+  console.log("sfdsdf");
+  res.clearCookie("token");
+  res.send("ok");
+}
+
+export { verifyUser, getUserID, signin, login, logout };

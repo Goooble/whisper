@@ -5,9 +5,9 @@ function Login() {
     <Form method="post">
       <label htmlFor="username">
         Username:
-        <input type="text" name="username" id="username" />
+        <input type="text" name="username" id="username" defaultValue="a" />
       </label>
-      <label htmlFor="password">
+      <label htmlFor="password" defaultValue="a">
         Password:
         <input type="password" name="password" id="password" />
       </label>

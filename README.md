@@ -16,6 +16,8 @@ Checkout status codes
 
 When you need to change a variable using two states, just make a normal variable that decides between taking the values of two states, remember how you coded up the selecting user for DM
 
+Frontend protecting routes is so that the page doesnt load and then redirect after backend call, and dont substityte frontend protection by making backend call as well, adds overhead
+
 ### Data flow
 
 #### Server

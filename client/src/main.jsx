@@ -9,10 +9,6 @@ import { Room } from "./Room.jsx";
 import { Login } from "./Login.jsx";
 import { Signup } from "./Signup.jsx";
 
-function auth() {
-  console.log("Authing");
-}
-
 async function signupAction({ request }) {
   const data = await request.formData();
   const payload = {
@@ -28,6 +24,16 @@ async function signupAction({ request }) {
   if (res.ok) {
     return redirect("/auth/login");
   }
+}
+
+async function verifyAuth({ request }, next) {
+  const res = await fetch("http://localhost:8080/api", {
+    credentials: "include",
+  });
+  console.log(res);
+  if (!res.ok) {
+    return redirect("/auth/login");
+  } else next();
 }
 async function loginAction({ request }) {
   const data = await request.formData();
@@ -70,7 +76,7 @@ const router = createBrowserRouter([
   },
   {
     path: "app", //protected routes
-    middleware: [auth],
+    middleware: [verifyAuth],
     children: [
       {
         path: "room",

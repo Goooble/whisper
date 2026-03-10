@@ -2,6 +2,8 @@
 
 ## TODO
 
+Need API layer on the front end to handle reroutes if logged out along the way
+
 fix naming schemes and comment code
 
 Need to validate payloads

@@ -1,7 +1,9 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+
 import type { Request, Response } from "express";
 import { addNewUser, getUserByUsername, getUsers } from "./db.js";
+import { json } from "node:stream/consumers";
 
 function verifyUser(url: string): boolean {
   const name: string = grabName(url);
@@ -63,4 +65,33 @@ function logout(req: Request, res: Response) {
   res.send("ok");
 }
 
-export { verifyUser, getUserID, signin, login, logout };
+function verifyAuth(req: Request, res, next) {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.sendStatus(401);
+  }
+
+  try {
+    const decoded = jwt.verify(token, "secret");
+    console.log(decoded);
+
+    next();
+  } catch (err) {
+    return res.sendStatus(401);
+  }
+}
+
+function verifyUserID(req, res) {
+  const token = req.cookies.token;
+  if (!token) {
+    return res.sendStatus(401);
+  }
+
+  try {
+    const decoded = jwt.verify(token, "secret");
+  } catch (err) {
+    return res.sendStatus(401);
+  }
+}
+
+export { verifyUser, getUserID, signin, login, logout, verifyAuth };

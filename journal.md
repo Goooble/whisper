@@ -46,4 +46,6 @@ I am impressed, really impressed and SO GLAD that I learnt typescript for this l
 
 I have an idea now, I brainstormed for few hours and I want to pivot this in that direction. Hope its impressive on a resume.
 
-<!-- Please add comments and Error validation before commits -->
+## Video Annotator
+
+New Idea again, collaborative real time video annotator

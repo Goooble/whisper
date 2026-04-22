@@ -1,5 +1,4 @@
 import express from "express";
-import { wss } from "./websocket.js";
 import cors from "cors";
 import { login, logout, signin, verifyAuth } from "./auth.js";
 import cookieParser from "cookie-parser";
@@ -21,7 +20,9 @@ app.get("/logout", logout);
 app.get("/api", verifyAuth, (req, res) => {
   res.send("ok");
 });
-app.get("/me");
+app.get("/me", (req, res) => {
+  res.send("ok");
+});
 app.listen(8080, () => {
   console.log("listening...");
 });

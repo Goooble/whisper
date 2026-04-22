@@ -1,53 +1,3 @@
-# ws
-
-## Table of Contents
-
-- [Class: WebSocketServer](#class-websocketserver)
-  - [new WebSocketServer(options[, callback])](#new-websocketserveroptions-callback)
-  - [Event: 'close'](#event-close)
-  - [Event: 'connection'](#event-connection)
-  - [Event: 'error'](#event-error)
-  - [Event: 'headers'](#event-headers)
-  - [Event: 'listening'](#event-listening)
-  - [Event: 'wsClientError'](#event-wsclienterror)
-  - [server.address()](#serveraddress)
-  - [server.clients](#serverclients)
-  - [server.close([callback])](#serverclosecallback)
-  - [server.handleUpgrade(request, socket, head, callback)](#serverhandleupgraderequest-socket-head-callback)
-  - [server.shouldHandle(request)](#servershouldhandlerequest)
-- [Class: WebSocket](#class-websocket)
-  - [Ready state constants](#ready-state-constants)
-  - [new WebSocket(address[, protocols][, options])](#new-websocketaddress-protocols-options)
-    - [IPC connections](#ipc-connections)
-  - [Event: 'close'](#event-close-1)
-  - [Event: 'error'](#event-error-1)
-  - [Event: 'message'](#event-message)
-  - [Event: 'open'](#event-open)
-  - [Event: 'ping'](#event-ping)
-  - [Event: 'pong'](#event-pong)
-  - [Event: 'redirect'](#event-redirect)
-  - [Event: 'unexpected-response'](#event-unexpected-response)
-  - [Event: 'upgrade'](#event-upgrade)
-  - [websocket.addEventListener(type, listener[, options])](#websocketaddeventlistenertype-listener-options)
-  - [websocket.binaryType](#websocketbinarytype)
-  - [websocket.bufferedAmount](#websocketbufferedamount)
-  - [websocket.close([code[, reason]])](#websocketclosecode-reason)
-  - [websocket.extensions](#websocketextensions)
-  - [websocket.isPaused](#websocketispaused)
-  - [websocket.onclose](#websocketonclose)
-  - [websocket.onerror](#websocketonerror)
-  - [websocket.onmessage](#websocketonmessage)
-  - [websocket.onopen](#websocketonopen)
-  - [websocket.pause()](#websocketpause)
-  - [websocket.ping([data[, mask]][, callback])](#websocketpingdata-mask-callback)
-  - [websocket.pong([data[, mask]][, callback])](#websocketpongdata-mask-callback)
-  - [websocket.protocol](#websocketprotocol)
-  - [websocket.readyState](#websocketreadystate)
-  - [websocket.removeEventListener(type, listener)](#websocketremoveeventlistenertype-listener)
-  - [websocket.resume()](#websocketresume)
-  - [websocket.send(data[, options][, callback])](#websocketsenddata-options-callback)
-  - [websocket.terminate()](#websocketterminate)
-  - [websocket.url](#websocketurl)
 - [createWebSocketStream(websocket[, options])](#createwebsocketstreamwebsocket-options)
 - [Environment variables](#environment-variables)
   - [WS_NO_BUFFER_UTIL](#ws_no_buffer_util)
@@ -701,19 +651,13 @@ A message was received with a length longer than the maximum supported length,
 as configured by the `maxPayload` option.
 
 [concurrency-limit]: https://github.com/websockets/ws/issues/1202
-[duplex-options]:
-  https://nodejs.org/api/stream.html#stream_new_stream_duplex_options
-[`buffer.from()`]:
-  https://nodejs.org/api/buffer.html#static-method-bufferfromobject-offsetorencoding-length
-[`http.request()`]:
-  https://nodejs.org/api/http.html#http_http_request_options_callback
-[`https.request()`]:
-  https://nodejs.org/api/https.html#https_https_request_options_callback
-[permessage-deflate]:
-  https://tools.ietf.org/html/draft-ietf-hybi-permessage-compression-19
+[duplex-options]: https://nodejs.org/api/stream.html#stream_new_stream_duplex_options
+[`buffer.from()`]: https://nodejs.org/api/buffer.html#static-method-bufferfromobject-offsetorencoding-length
+[`http.request()`]: https://nodejs.org/api/http.html#http_http_request_options_callback
+[`https.request()`]: https://nodejs.org/api/https.html#https_https_request_options_callback
+[permessage-deflate]: https://tools.ietf.org/html/draft-ietf-hybi-permessage-compression-19
 [`request.getheader()`]: https://nodejs.org/api/http.html#requestgetheadername
-[`request.removeheader()`]:
-  https://nodejs.org/api/http.html#requestremoveheadername
+[`request.removeheader()`]: https://nodejs.org/api/http.html#requestremoveheadername
 [`socket.destroy()`]: https://nodejs.org/api/net.html#net_socket_destroy_error
 [`websocket.close()`]: #websocketclosecode-reason
 [zlib-options]: https://nodejs.org/api/zlib.html#zlib_class_options

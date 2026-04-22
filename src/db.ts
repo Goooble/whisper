@@ -36,9 +36,4 @@ async function getUserByUsername(username: string) {
   }
 }
 
-const users: string[] = ["a", "b", "c", "d"];
-function getUsers(): string[] {
-  return users;
-}
-
-export { getUsers, pool, addNewUser, getUserByUsername };
+export { pool, addNewUser, getUserByUsername };

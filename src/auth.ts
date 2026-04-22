@@ -3,25 +3,6 @@ import bcrypt from "bcrypt";
 
 import type { Request, Response } from "express";
 import { addNewUser, getUserByUsername, getUsers } from "./db.js";
-import { json } from "node:stream/consumers";
-
-function verifyUser(url: string): boolean {
-  const name: string = grabName(url);
-  const userList: string[] = getUsers();
-  if (userList.includes(name)) return true;
-  else return false;
-}
-
-function getUserID(url: string): string {
-  return grabName(url);
-}
-//refactor while auth
-function grabName(url: string): string {
-  const name: string = new URL(url, "ws://localhost:8000").searchParams.get(
-    "user",
-  ) as string;
-  return name;
-}
 
 async function signin(req: Request, res: Response) {
   req.body.password = await bcrypt.hash(req.body.password, 12);
@@ -56,7 +37,7 @@ async function login(req: Request, res: Response) {
     console.log(e);
     return res.sendStatus(400);
   }
-  res.send("LOGGED IN");
+  res.send("LOGGED INnnn");
 }
 
 function logout(req: Request, res: Response) {
@@ -94,4 +75,4 @@ function verifyUserID(req, res) {
   }
 }
 
-export { verifyUser, getUserID, signin, login, logout, verifyAuth };
+export { signin, login, logout, verifyAuth };

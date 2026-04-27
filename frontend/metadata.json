@@ -1,0 +1,6 @@
+{
+  "name": "SyncMark: Collaborative Video Annotator",
+  "description": "A real-time collaborative platform for video annotation, freehand drawing, and synchronized comments.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}

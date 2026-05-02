@@ -5,9 +5,18 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import { jwtDecode } from "jwt-decode";
+
+interface DecodedToken {
+  id: string;
+  email: string;
+  iat: number;
+  exp: number;
+}
 
 interface AuthContextValue {
   token: string | null;
+  username: string | null;
   isAuthenticated: boolean;
   login: (token: string) => void;
   logout: () => void;
@@ -20,9 +29,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     localStorage.getItem("token"),
   );
 
-  const value = useMemo(
-    () => ({
+  const value = useMemo(() => {
+    const decoded: DecodedToken | null = token ? jwtDecode(token) : null;
+    const username = decoded?.email || null;
+
+    return {
       token,
+      username,
       isAuthenticated: Boolean(token),
       login: (newToken: string) => {
         localStorage.setItem("token", newToken);
@@ -32,9 +45,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         localStorage.removeItem("token");
         setToken(null);
       },
-    }),
-    [token],
-  );
+    };
+  }, [token]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }

@@ -3,16 +3,26 @@ import { Login } from "./Login";
 import { SignUp } from "./SignUp";
 import { Dashboard } from "./Dashboard";
 import { Editor } from "./Editor";
+import { useAuth } from "./auth/AuthContext";
 
 export default function App() {
-  const isAuth = true; // replace with real auth later
+  const { isAuthenticated: isAuth } = useAuth();
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" />} />
+      <Route
+        path="/"
+        element={<Navigate to={isAuth ? "/dashboard" : "/login"} />}
+      />
 
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route
+        path="/login"
+        element={isAuth ? <Navigate to="/dashboard" /> : <Login />}
+      />
+      <Route
+        path="/signup"
+        element={isAuth ? <Navigate to="/dashboard" /> : <SignUp />}
+      />
 
       <Route
         path="/dashboard"

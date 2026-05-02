@@ -1,3 +1,26 @@
+import { useAuth } from "./auth/AuthContext";
+import { useNavigate } from "react-router-dom";
 export function Dashboard() {
-  return <h1>dash</h1>;
+  const { logout } = useAuth();
+  const navigate = useNavigate();
+  return (
+    <>
+      <button
+        onClick={() => {
+          logout();
+          navigate("/");
+          console.log("logged out");
+        }}
+      >
+        Logout
+      </button>
+      <button
+        onClick={() => {
+          navigate("/editor");
+        }}
+      >
+        Editor
+      </button>
+    </>
+  );
 }
